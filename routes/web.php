@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController; //add the ControllerNameSpace
 use App\Http\Controllers\QrCodeController;
+use App\Http\Controllers\WeatherController;
+
 // Define a route for the GET method
 Route::get('/', function () {
    //return 'Hello, world!';
@@ -31,3 +33,10 @@ Route::resource("/student", StudentController::class);
 Route::get('/qrcode', [QrCodeController::class, 'index']);
 
 Route::get('/students/{student}', 'StudentController@show')->name('students.show');
+
+Route::get('/students', [StudentUIController::class, 'index']);
+
+
+
+//Route::get('/weather', [WeatherController::class, 'showWeatherForm']);
+//Route::post('/weather', [WeatherController::class, 'getWeather']);

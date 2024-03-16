@@ -1,5 +1,29 @@
 <?php
 
+namespace App\Services;
+
+use GuzzleHttp\Client;
+
+class WeatherService
+{
+    protected $client;
+    protected $apiKey;
+    protected $baseUrl;
+
+    public function __construct()
+    {
+        $this->client = new Client();
+        $this->apiKey = env('OPENWEATHERMAP_API_KEY');
+        $this->baseUrl = 'http://api.openweathermap.org/data/2.5';
+    }
+
+    public function getCurrentWeather($city)
+    {
+        $response = $this->client->get("{$this->baseUrl}/weather?q={$city}&appid={$this->apiKey}");
+        return json_decode($response->getBody()->getContents(), true);
+    }
+}
+
 return [
 
     /*
@@ -29,6 +53,11 @@ return [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+    ],
+
+    'weather_api' => [
+        'key' => env('WEATHER_API_KEY'),
+        'base_url' => 'https://api.openweathermap.org/data/2.5',
     ],
 
 ];
